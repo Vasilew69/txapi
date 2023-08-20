@@ -1,7 +1,7 @@
 require("dotenv").config()
 const mongoose = require("mongoose");
 
-uri = "mongodb+srv://txAPI:lDzvlqZga44fhRHR@txapi.nhmoxlm.mongodb.net/txAPI?retryWrites=true&w=majority";
+uri = "mongodb+srv://txAPI:YOrdan__1601@txapi.nhmoxlm.mongodb.net/txAPI?retryWrites=true&w=majority";
 
 const connectDB = () => {
     console.log("connected to db")

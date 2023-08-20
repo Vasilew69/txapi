@@ -3,35 +3,28 @@ const express = require("express");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const expressGraphQL = require('express-graphql-v').graphqlHTTP
-const schema = require('./schema.js')
 
 const app = express();
 
 const PORT = process.env.PORT || 5000;
 
-const versions_routes = require("./routes/versions");
-const updateWin32_routes = require("./routes/updatewin");
-const updateLinux_routes = require("./routes/updatelinux");
-const reportData_routes = require("./routes/report");
+
 const connectDB = require('./db/connect');
-
-const jsonParser = bodyParser.json()
-
-const urlencodedParser = bodyParser.urlencoded({ extended: false })
+const router = require("./routes/router");
 
 app.use(morgan('dev'), cors());
+app.use(bodyParser.json({ limit: "50mb" }))
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 }))
 
 app.get("/", (req, res) => {
     res.send("working")
 });
 
 //midleware or to set router
-app.use("/api/changelog/versions/", versions_routes);
-app.use("/api/changelog/versions/win32/server", updateWin32_routes);
-app.use("/api/changelog/versions/linux/server", updateLinux_routes);
+app.use(router);
 
-app.post("/public/submit", jsonParser, function (req, res) {
+app.post("/public/submit", function (req, res) {
+    res.setHeader('Content-Type', 'application/json', 'text/html')
     res.send('We have the report ' + req.body.txversion);
     console.log(req.body )
 });

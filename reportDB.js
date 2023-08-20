@@ -1,7 +1,7 @@
 require('dotenv').config();
 const connectDB = require('./db/connect');
 const Report = require('./models/reports');
-const ReportJSON = require('./reports.json');
+const ReportJSON = require("./reports.json");
 
 const start = async () => {
     try {
